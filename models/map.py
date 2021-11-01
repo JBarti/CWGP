@@ -65,7 +65,7 @@ def _build_adjacency_dict(map: Map):
 
 def generate_random_map(rows: int, cols: int):
     random_cell_death_matrix = [
-        choices(population=[True, False], weights=[3, 1], k=cols)
+        choices(population=[True, False], weights=[5, 2], k=cols)
         for row in range(rows)
     ]
 
@@ -89,10 +89,6 @@ def get_next_map_generation(map: Map):
     # generiramo tablicu bliskosti
     adjacency_dict = _build_adjacency_dict(map)
     
-    # nova matrica čelija di su sve čelije mrtve
-    new_map = [[Cell(is_dead=True)] * map.cols] * map.rows
-
-
     # prolazimo kroz svaku čeliju stare mape
     # dohvacamo njene okolne celije
     # stvaramo celiju iduce generacije
@@ -102,10 +98,22 @@ def get_next_map_generation(map: Map):
             current_cell = map.cell_grid[row][col]
             adjacent_cells = adjacency_dict[current_cell]
             next_cell_gen = get_next_cell_generation(current_cell, adjacent_cells)
-            new_map[row][col] = next_cell_gen
+            map.cell_grid[row][col] = next_cell_gen
 
-    return Map(
-        row_count=map.rows,
-        col_count=map.cols,
-        cell_grid=new_map,
-    )
+    return map
+
+
+def toggle_map_cell(map: Map, cell_row: int, cell_col: int):
+    """toggle_map_cell.
+
+    Args:
+        map (Map): map
+        cell_row (int): cell_row
+        cell_col (int): cell_col
+    """
+    selected_cell = map.cell_grid[cell_row][cell_col]
+    toggled_cell = Cell(is_dead = not selected_cell.is_dead)
+
+    map.cell_grid[cell_row][cell_col] = toggled_cell
+
+    return map

@@ -10,3 +10,16 @@ def draw_map(map: Map):
         print(row_string + "|")
         print("-" * (map.cols * 2 + 1))
         row_string = ""
+
+def draw_help():
+    print(
+        """
+        T -> toggle cell
+        G -> generate random map
+        N -> next generation
+        """
+    )
+
+
+def clear_screen():
+    print("\033c")

@@ -1,8 +1,8 @@
 from typing import List
 
 CELL_SIGNS_BY_DEATH_STATE = {
-    True: "#",
-    False: " ",
+    True: " ",
+    False: "#",
 }
 
 class Cell:
